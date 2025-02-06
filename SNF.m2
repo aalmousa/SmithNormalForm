@@ -87,18 +87,39 @@ preSmithNormalForm Matrix := o -> (f) -> (
      Q := if schg then map(source f, source D,lift(schange,R));
      ( D, P, Q ))
 
+ -*
+ --under construction
 newSmithNormalForm = method()
-newSmithNormalForm Matrix := f -> (
-    --first run preSNF until done
+newSmithNormalForm Matrix := A -> (
+    D = preSmithNormalForm(A); -- get into a diagonal matrix
+    diagEntries = sort for i from 0 to numrows D -1 list D_(i,i) -- extract diagonal entries
+    diagMods = for i from 0 to #diagEntries-2 list diagEntries_i % diagEntries_(i+1) -- 
+    while any(diagMods, i-> i!= 0) do (
+	
+    
     --sort diagonal entries
     --find 2 consecutive indices on diagonal missing divisibility criterion
     --do transformation on correct side, run preSNF again
     )
+*-
+
  end--------------------------------------
 
 restart
-load "smith-normal-mods.m2"
+load "SNF.m2"
 
+f = matrix{
+    {4,0,0},
+    {0,4,0},
+    {0,0,6}
+    };
+preSmithNormalForm f
+g = matrix{
+    {4,0,0},
+    {0,4,0},
+    {0,4,6}
+    };
+preSmithNormalForm g
 --example over QQ[x] that is broken
 R = QQ[x]
 h = transpose matrix{{x^3+1},{x^2+1}}
@@ -119,7 +140,7 @@ M = P*D*Q
 P'*M*Q' == D'
 
 ---------
-M = matrix{{4,0},{4,6}};
+M = matrix{{4,0},{0,6}};
 preSmithNormalForm M
 
 preSmithNormalForm d
